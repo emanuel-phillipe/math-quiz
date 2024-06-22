@@ -22,8 +22,8 @@ export const mathQuestions = [
   },
   {
     question: "Considere a função $$f(x) = 2x^3 - 3x^2 + 5x - 7$$. Qual é o valor de $$f(2)$$?",
-    options: ["5", "9", "13", "17", "21"],
-    answer: "17",
+    options: ["5", "9", "13", "7", "21"],
+    answer: "7",
     about: "Funções Variadas",
     latex: true
   },

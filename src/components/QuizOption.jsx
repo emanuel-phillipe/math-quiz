@@ -9,7 +9,7 @@ function QuizOption({title, desc, click, disabled}) {
   }
 
   return (
-      <div onClick={disabled ? "" : click} className={classStyles.div}>
+      <div onClick={click} className={classStyles.div}>
         <h3 className={classStyles.title}>{title}</h3>
         <p className={classStyles.desc}>{desc}</p>
       </div>
