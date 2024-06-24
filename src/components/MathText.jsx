@@ -1,21 +1,24 @@
-import React from 'react';
-import ReactMarkdown from 'react-markdown';
-import RemarkMathPlugin from 'remark-math';
-import { BlockMath, InlineMath } from 'react-katex';
-import 'katex/dist/katex.min.css';
+import React from "react";
+import ReactMarkdown from "react-markdown";
+import { MathJaxContext, MathJax } from "better-react-mathjax";
 
-const _mapProps = (props) => ({
-  ...props,
-  remarkPlugins: [
-    RemarkMathPlugin
-  ],
-  components: {
-    ...props.renderers,
-    math: ({ value }) => <BlockMath>{value}</BlockMath>,
-    inlineMath: ({ value }) => <InlineMath>{value}</InlineMath>
-  }
-});
+const config = {
+  loader: { load: ["[tex]/html"] },
+  tex: {
+    packages: { "[+]": ["html"] },
+    inlineMath: [["$$", "$$"]],
+    displayMath: [["$$", "$$"]],
+  },
+};
 
-const MathText = (props) => <ReactMarkdown {..._mapProps(props)}/>;
-
-export default MathText;
+export default function MathText({children}) {
+  return (
+    <MathJaxContext>
+      <div>
+        <MathJax dynamic hideUntilTypeset="every">
+          <ReactMarkdown>{children}</ReactMarkdown>
+        </MathJax>
+      </div>
+    </MathJaxContext>
+  );
+}
