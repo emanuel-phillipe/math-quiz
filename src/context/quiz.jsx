@@ -1,5 +1,6 @@
 import { createContext, useReducer } from "react";
 import { mathQuestions } from "../data/questions";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const stages = ["Start", "Playing", "End", "Incorrects", "History"];
 
@@ -11,7 +12,7 @@ const initialState = {
   answerSelected: false,
   timeNeeded: {minutes: 0, seconds: 0},
   incorrectQuestions: [],
-  history: JSON.parse(localStorage.getItem("navigatorInfo"))
+  history: JSON.parse(localStorage.getItem("navigatorInfo")) || [],
 }
 
 const quizReducer = (state, action) => {
@@ -107,6 +108,7 @@ const quizReducer = (state, action) => {
             option,
             questionNumber: state.currentQuestion,
             questionObject: state.questions[state.currentQuestion],
+            correction: null
           }],
           answerSelected: option,
         }
@@ -114,7 +116,7 @@ const quizReducer = (state, action) => {
     case "INCORRECT_QUESTIONS":
       return {
         ...state,
-        gameStage: stages[3]
+        gameStage: stages[3],
       }
       case "QUIZ_END":
         return {

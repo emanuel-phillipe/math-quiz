@@ -32,6 +32,11 @@ export function WelcomePage(){
         <QuizOption title={'Língua Portuguesa'} desc={'12 questões objetivas'} disabled={true}/>
         <QuizOption title={'História'} desc={'10 questões objetivas'} disabled={true}/>
         <QuizOption title={'Geografia'} desc={'10 questões objetivas'} disabled={true}/>
+        <QuizOption title={'Física'} desc={'10 questões objetivas'} disabled={true}/>
+        <QuizOption title={'Sociologia'} desc={'10 questões objetivas'} disabled={true}/>
+        <QuizOption title={'Filosofia'} desc={'10 questões objetivas'} disabled={true}/>
+        <QuizOption title={'Educação Física'} desc={'10 questões objetivas'} disabled={true}/>
+        <QuizOption title={'Inglês'} desc={'12 questões objetivas'} disabled={true}/>
 
       </div>
 

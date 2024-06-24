@@ -10,10 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.13.0",
     "@phosphor-icons/react": "^2.1.6",
+    "dotenv": "^16.4.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-latex": "^2.0.0"
+    "react-katex": "^3.0.1",
+    "react-latex": "^2.0.0",
+    "react-markdown": "^9.0.1",
+    "remark-math": "^6.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
