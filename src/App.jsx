@@ -4,6 +4,7 @@ import { WelcomePage } from "./components/WelcomePage";
 import { QuizContext } from "./context/quiz";
 import GameEnd from "./components/GameEnd";
 import IncorrectQuestions from "./components/IncorrectQuestions";
+import {QuestionCreation} from "./components/QuestionCreation";
 
 export function App() {
   const [quizState, dispatch] = useContext(QuizContext)
@@ -15,6 +16,7 @@ export function App() {
       {quizState.gameStage === "Playing" && <Question />}
       {quizState.gameStage === "End" && <GameEnd />}
       {quizState.gameStage === "Incorrects" && <IncorrectQuestions />}
+      {quizState.gameStage === "Creation" && <QuestionCreation />}
     </div>
   )
 }

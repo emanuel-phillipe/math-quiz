@@ -1,7 +1,7 @@
 import { useContext, useState } from "react"
 import { QuizContext } from "../context/quiz"
 import QuizOption from "./QuizOption"
-import { ClockCounterClockwise } from "@phosphor-icons/react"
+import { ClockCounterClockwise, Plus } from "@phosphor-icons/react"
 import HistoryPage from "./History"
 
 export function WelcomePage(){
@@ -19,12 +19,21 @@ export function WelcomePage(){
           <p className="text-zinc-500">Seja muuito bem-vindo(a)! Para começar, é só clicar em algum quiz!</p>
         </div>
 
-        <div className="p-2 bg-zinc-100 h-max rounded-lg cursor-pointer hover:bg-zinc-200 transition-all" onClick={() => setHistory(true)}>
-          <ClockCounterClockwise size={22} alt="Histórico"/>
+        <div className="flex gap-3">
+
+          <div className="p-2 bg-zinc-100 text-zinc-600 h-max rounded-lg cursor-not-allowed transition-all" onClick={() => setHistory(false)}>
+            <ClockCounterClockwise size={22} alt="Em desenvolvimento"/>
+          </div>
+
+          <div className="bg-zinc-100 flex h-max items-center gap-2 rounded-[0.5rem] p-2 w-max hover:bg-zinc-200 transition-all cursor-pointer" onClick={() => dispatch({type: "QUIZ_CREATION"})}>
+            <Plus size={22} alt="Criar quiz"/>
         </div>
+
+        </div>
+        
       </div>
 
-      <div className="mt-10 grid gap-1 grid-cols-3 grid-rows-5">
+      <div className="mt-10 grid gap-1 grid-cols-2 xl:grid-cols-5 grid-rows-5">
 
         {
           quizState.subjects.map((subject, index) => {

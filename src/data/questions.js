@@ -90,7 +90,14 @@ export const subjects = [
         answer: "Ligações covalentes envolvem o compartilhamento de pares de elétrons entre átomos, enquanto ligações iônicas envolvem a transferência de elétrons de um átomo para outro, criando íons positivos e negativos.",
         descriptions: ["Química", "Ligações Químicas"],
         latex: false
-      }   
+      },
+      {
+        question: "Marque a opção que melhor descreve a Lei da Conservação da Energia.",
+        options: ["A Lei da Conservação da Energia afirma que a energia não pode ser criada nem destruída, apenas transformada. Exemplo: energia potencial gravitacional convertida em energia cinética ao cair um objeto.", "A Lei da Conservação da Energia afirma que a energia pode ser criada a partir do nada, mas não pode ser destruída. Exemplo: criar energia elétrica a partir de uma fonte infinita.", "A Lei da Conservação da Energia afirma que a energia pode ser destruída, mas não pode ser criada. Exemplo: energia térmica desaparecendo ao resfriar um objeto.", "A Lei da Conservação da Energia afirma que a energia pode ser criada e destruída em circunstâncias especiais. Exemplo: energia química transformada em energia elétrica e depois destruída.", "A Lei da Conservação da Energia afirma que a energia é sempre conservada apenas em sistemas isolados. Exemplo: energia mecânica se transformando em energia térmica em uma máquina."],
+        answer: "A Lei da Conservação da Energia afirma que a energia não pode ser criada nem destruída, apenas transformada. Exemplo: energia potencial gravitacional convertida em energia cinética ao cair um objeto.",
+        descriptions: ["Física", "Lei da Conservação da Energia"],
+        latex: false,
+      }
     ]
   }
 ]
