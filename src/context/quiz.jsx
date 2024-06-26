@@ -1,12 +1,12 @@
 import { createContext, useReducer } from "react";
-import { mathQuestions } from "../data/questions";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { subjects } from "../data/questions";
 
 const stages = ["Start", "Playing", "End", "Incorrects", "History"];
 
 const initialState = {
   gameStage: stages[0],
-  questions: mathQuestions,
+  subjects: subjects,
+  questions: [],
   currentQuestion: 0,
   score: 0,
   answerSelected: false,
@@ -18,9 +18,23 @@ const initialState = {
 const quizReducer = (state, action) => {
 
   switch(action.type) {
-    case "CHANGE_STATE":
+    case "SELECT_QUESTION_AND_SORT":
+
+      var index = action.payload.index
+
+      var questionsSorted = subjects[index].questions.sort(() => {
+        return Math.random() - 0.5 //EMBARALHAR
+      })
+
+      questionsSorted.map((question) => {
+        question.options.sort(() => {
+          return Math.random() - 0.5 //EMBARALHAR
+        })
+      })
+
       return {
         ...state,
+        questions: questionsSorted,
         gameStage: stages[1]
       }
     case "UPDATE_TIME":
@@ -30,21 +44,6 @@ const quizReducer = (state, action) => {
           minutes: state.timeNeeded.seconds === 59 ? state.timeNeeded.minutes + 1 : state.timeNeeded.minutes,
           seconds: state.timeNeeded.seconds === 59 ? 0 : state.timeNeeded.seconds + 1,
         }
-      }
-    case "REORDER_QUESTIONS":
-      var reordered = mathQuestions.sort(() => {
-        return Math.random() - 0.5 //EMBARALHAR
-      })
-
-      reordered.map((question) => {
-        question.options.sort(() => {
-          return Math.random() - 0.5
-        })
-      })
-
-      return {
-        ...state,
-        questions: reordered
       }
     case "CHANGE_QUESTION":
       var nextQuestion = state.currentQuestion + 1

@@ -6,14 +6,14 @@ const config = {
   loader: { load: ["[tex]/html"] },
   tex: {
     packages: { "[+]": ["html"] },
-    inlineMath: [["$$", "$$"]],
-    displayMath: [["$$", "$$"]],
+    inlineMath: [["$", "$"]],
+    displayMath: [["$", "$"]],
   },
 };
 
 export default function MathText({children}) {
   return (
-    <MathJaxContext>
+    <MathJaxContext config={config}>
       <div>
         <MathJax dynamic hideUntilTypeset="every">
           <ReactMarkdown>{children}</ReactMarkdown>

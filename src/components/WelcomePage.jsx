@@ -24,19 +24,13 @@ export function WelcomePage(){
         </div>
       </div>
 
-      <div className="mt-10 grid grid-cols-4 grid-rows-5 gap-4">
+      <div className="mt-10 grid gap-1 grid-cols-3 grid-rows-5">
 
-        <QuizOption click={() => dispatch({type: "CHANGE_STATE"})} title={'Matemática'} desc={'10 questões objetivas'}/>
-        <QuizOption title={'Biologia'} desc={'12 questões objetivas'} disabled={true}/>
-        <QuizOption title={'Química'} desc={'11 questões objetivas'} disabled={true}/>
-        <QuizOption title={'Língua Portuguesa'} desc={'12 questões objetivas'} disabled={true}/>
-        <QuizOption title={'História'} desc={'10 questões objetivas'} disabled={true}/>
-        <QuizOption title={'Geografia'} desc={'10 questões objetivas'} disabled={true}/>
-        <QuizOption title={'Física'} desc={'10 questões objetivas'} disabled={true}/>
-        <QuizOption title={'Sociologia'} desc={'10 questões objetivas'} disabled={true}/>
-        <QuizOption title={'Filosofia'} desc={'10 questões objetivas'} disabled={true}/>
-        <QuizOption title={'Educação Física'} desc={'10 questões objetivas'} disabled={true}/>
-        <QuizOption title={'Inglês'} desc={'12 questões objetivas'} disabled={true}/>
+        {
+          quizState.subjects.map((subject, index) => {
+            return (<QuizOption key={index} title={subject.title} desc={subject.questions.length + " questões objetivas"} disabled={false} click={() => dispatch({type: "SELECT_QUESTION_AND_SORT", payload: {index}})}/>)
+          })
+        }
 
       </div>
 
