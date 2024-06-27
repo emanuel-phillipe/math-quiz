@@ -4,7 +4,7 @@ import { WelcomePage } from "./components/WelcomePage";
 import { QuizContext } from "./context/quiz";
 import GameEnd from "./components/GameEnd";
 import IncorrectQuestions from "./components/IncorrectQuestions";
-import {QuestionCreation} from "./components/QuestionCreation";
+import {QuestionCreation} from "./components/QuizCreation/QuestionCreation";
 
 export function App() {
   const [quizState, dispatch] = useContext(QuizContext)

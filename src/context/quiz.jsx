@@ -1,7 +1,7 @@
 import { createContext, useReducer } from "react";
 import { subjects } from "../data/questions";
 
-const stages = ["Start", "Playing", "End", "Incorrects", "Creation"];
+const stages = ["Start", "Playing", "End", "Incorrects", "Creation", "QuestionCreation"];
 
 const initialState = {
   gameStage: stages[0],
@@ -126,6 +126,11 @@ const quizReducer = (state, action) => {
         return {
           ...state,
           gameStage: stages[4]
+        }
+      case "CREATE_QUESTION_PAGE":
+        return {
+          ...state,
+          gameStage: stages[5]
         }
     default:
       return state

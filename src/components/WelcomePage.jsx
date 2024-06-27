@@ -33,7 +33,7 @@ export function WelcomePage(){
         
       </div>
 
-      <div className="mt-10 grid gap-1 grid-cols-2 xl:grid-cols-5 grid-rows-5">
+      <div className="mt-10 grid gap-1 lg:grid-cols-1 gap-3 grid-rows-5">
 
         {
           quizState.subjects.map((subject, index) => {
