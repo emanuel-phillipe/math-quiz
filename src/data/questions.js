@@ -3,7 +3,7 @@ export const subjects = [
     title: "Matemática e Suas Tecnologias",
     questions: [
       {
-        question: "Gabriel está organizando uma festa e precisa de talheres para servir seus convidados. Ele tem pacotes de garfos que vêm em grupos de 6 e pacotes de facas que vêm em grupos de 8. Qual é o menor número de convidados que João pode ter para que todos os convidados tenham o mesmo número de garfos e facas sem sobrar nenhum talher?",
+        question: " ",
         options: ["12", "18", "36", "30", "24"],
         answer: "24",
         descriptions: ["MMC e/ou MDC"],

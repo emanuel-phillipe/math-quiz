@@ -69,7 +69,7 @@ export const Question = () => {
     }
   }
 
-  const optionsLetters = ["a", "b", "c", "d", "e"]
+  const optionsLetters = ["a", "b", "c", "d", "e", "f", "g", "h"];
 
   const onKey = (event) => {
 

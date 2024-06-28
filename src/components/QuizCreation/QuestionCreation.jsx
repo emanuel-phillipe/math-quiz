@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { QuizContext } from "../../context/quiz";
-import { Plus } from "@phosphor-icons/react";
+import { Plus, Trash, TrashSimple } from "@phosphor-icons/react";
 import { CreateQuestionPage } from "./CreateQuestionPage";
 
 // {
@@ -74,10 +74,13 @@ export function QuestionCreation() {
 
               quizValues.questions ? (quizValues.questions.map((current, index) => {
                 return (
-                  <div key={index} className="flex p-2 bg-zinc-100 flex justify-between px-4 items-center rounded-lg">
-                    <p className="p-2 text-[1.1rem] font-semibold">{index+1}</p>
-                    <p className="">{truncate(current.question, 40)}</p>
-                    <p className="text-[0.9rem]">{current.options.length} opções</p>
+                  <div key={index} className="flex p-4 border-[0.7px] border-zinc-300 hover:border-zinc-500 transition-all px-4 rounded-lg items-center">
+                    <p className="text-[1.1rem] pl-1 font-bold">{index < 10 ? `0${index+1}` : index+1}</p>
+                    <div className="flex flex-col pl-3">
+                      <p className="font-normal text-zinc-800">{truncate(current.question, 50)}</p>
+                      <p className="text-[0.9rem] text-zinc-500">{current.options.length} opções</p>
+                    </div>
+                    <TrashSimple />
                   </div>
                 )
               })) : ""

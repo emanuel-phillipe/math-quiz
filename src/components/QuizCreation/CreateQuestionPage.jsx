@@ -20,7 +20,7 @@ export function CreateQuestionPage({saveQuestion}) {
   useEffect(() => {
     var able = false
 
-    if(questionInfo.question != "" && questionInfo.options != []){
+    if(questionInfo.question != "" && questionInfo.options != [] && questionInfo.answer != ""){
       able = true
     }
     
@@ -30,7 +30,7 @@ export function CreateQuestionPage({saveQuestion}) {
   const descInput = React.useRef(null);
   const optionInput = React.useRef(null);
 
-  const optionsLetters = ["a", "b", "c", "d", "e"];
+  const optionsLetters = ["a", "b", "c", "d", "e", "f", "g", "h"];
 
   const onKeyPressed = (event) => {
     if (event.key === "Enter") {
@@ -70,6 +70,39 @@ export function CreateQuestionPage({saveQuestion}) {
   const latexOptionButtonFalse = !questionInfo.latex ? "p-2 px-4 text-zinc-50 bg-zinc-800 font-semibold transition-all rounded-lg": "p-2 px-4 text-zinc-700 border-zinc-700 font-semibold border-[0.7px] hover:border-zinc-700 transition-all rounded-lg"
 
   const saveOption = ableToSave ? "border-zinc-400 hover:border-zinc-600 transition-all cursor-pointer text-zinc-400 hover:text-zinc-600 border-[0.7px] p-2 px-4 rounded-lg w-max" : "border-zinc-400 transition-all cursor-not-allowed text-zinc-400 border-[0.7px] p-2 px-4 rounded-lg w-max"
+
+  const correctOptionSelection = (option) => {
+    if(option === questionInfo.answer){
+      setQuestionInfo((current) => {return {...current, answer: ""}})
+      return
+    }
+    setQuestionInfo((current) => {return {...current, answer: option}})
+  }
+
+  const [optionBeingEdited, setOptionBeingEdited] = useState("")
+
+  const editOption = (e, index) => {
+    e.preventDefault()
+
+    if(e.key === "Enter"){
+      var infos = questionInfo
+      infos.options[index] = e.target.value
+
+      setQuestionInfo(infos)
+    }
+  }
+
+  const selectEditingOption = (e, option) => {
+    e.preventDefault()
+    setOptionBeingEdited(option)
+  }
+
+  const changeOptionBeingEdit = (e, index) => {
+    var infos = questionInfo
+    infos.options[index] = e.target.value
+
+    setQuestionInfo(infos)
+  }
 
   return (
     <div className="py-5">
@@ -122,15 +155,18 @@ export function CreateQuestionPage({saveQuestion}) {
       <div>
         {questionInfo.options != []
           ? questionInfo.options.map((option, index) => {
+
+              var divStyle = questionInfo.answer === option ? "p-3 cursor-pointer flex items-center border-[1.7px] w-full my-5 rounded-[0.5rem] transition-all text-zinc-500 hover:text-zinc-800 border-green-400 bg-green-200" : "p-3 cursor-pointer flex items-center border-[1.7px] w-full my-5 rounded-[0.5rem] transition-all text-zinc-500 hover:text-zinc-800"
+
               return (
-                <div onClick={() => setQuestionInfo((current) => {return {...current, answer: option}})} key={index} className={"p-3 cursor-pointer flex items-center border-[1.7px] w-full my-5 rounded-[0.5rem] transition-all text-zinc-500 hover:text-zinc-800 " + questionInfo.answer === option ? "border-green-400 bg-green-200" : ""}>
+                <div onClick={() => correctOptionSelection(option)} key={index} className={divStyle}>
                   
                   <div className={'flex items-center justify-center px-3 h-10 rounded-[0.4rem]'}>
                     <p className='font-semibold text-[1.1rem] '>{optionsLetters[index]}</p>
                   </div>
                   
                   <div className={"flex items-center justify-center px-3 h-10 rounded-[0.4rem]"}>
-                    <p className="font-normal text-[1.1rem] ">{option}</p>
+                    <span onKeyDown={(e) => editOption(e, index)} onChange={(e) => changeOptionBeingEdit(e, index)} contentEditable={optionBeingEdited === option} onClick={(e) => selectEditingOption(option)} className="font-normal text-[1.1rem] ">{option}</span>
                   </div>
                   
                 </div>
