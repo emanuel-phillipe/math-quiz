@@ -76,6 +76,9 @@ export function QuestionCreation() {
 
   return (
     <div>
+
+      <AutoQuestion/>
+
       {
         questionsCreation ? <CreateQuestionPage saveQuestion={saveQuestion}/> : <div className="py-12">
 
@@ -145,7 +148,6 @@ export function QuestionCreation() {
       </div>
 
 }
-    <AutoQuestion />
     </div>
   );
 }
