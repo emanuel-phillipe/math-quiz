@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { QuizContext } from "../context/quiz"
 import QuizOption from "./QuizOption"
 import { ClockCounterClockwise, Plus } from "@phosphor-icons/react"
@@ -7,6 +7,13 @@ import HistoryPage from "./History"
 export function WelcomePage(){
   const [quizState, dispatch] = useContext(QuizContext)
   const [history, setHistory] = useState(false)
+
+  useEffect(() => {
+    fetch("http://localhost:3030/api/quiz/all").then(response => response.json())
+    .then(data=> {
+      dispatch({type: "UPDATE_QUIZES", payload: {quizes: data}})
+    })
+  })
 
   return (
     <div className="py-12">

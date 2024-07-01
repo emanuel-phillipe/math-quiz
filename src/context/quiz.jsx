@@ -1,11 +1,10 @@
 import { createContext, useReducer } from "react";
-import { subjects } from "../data/questions";
 
 const stages = ["Start", "Playing", "End", "Incorrects", "Creation", "QuestionCreation"];
 
 const initialState = {
   gameStage: stages[0],
-  subjects: subjects,
+  subjects: [],
   questions: [],
   currentQuestion: 0,
   score: 0,
@@ -18,11 +17,18 @@ const initialState = {
 const quizReducer = (state, action) => {
 
   switch(action.type) {
+    case "UPDATE_QUIZES":
+      var quizes = action.payload.quizes
+
+      return {
+        ...state,
+        subjects: quizes
+      }
     case "SELECT_QUESTION_AND_SORT":
 
       var index = action.payload.index
 
-      var questionsSorted = subjects[index].questions.sort(() => {
+      var questionsSorted = state.subjects[index].questions.sort(() => {
         return Math.random() - 0.5 //EMBARALHAR
       })
 

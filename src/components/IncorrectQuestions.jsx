@@ -132,12 +132,19 @@ function IncorrectQuestions() {
         </div>
 
         <div className="mt-3 text-justify text-zinc-800 text-[1rem]">
-          <Latex colorIsTextColor={true}>
-            {
-              quizState.incorrectQuestions[selectedQuestion].questionObject
-                .question
-            }
-          </Latex>
+          {
+            quizState.incorrectQuestions[selectedQuestion].questionObject.latex 
+            ? 
+            <Latex colorIsTextColor={true}>
+              {
+                quizState.incorrectQuestions[selectedQuestion].questionObject.question 
+              }
+            </Latex>
+            :
+            <p>
+              {quizState.incorrectQuestions[selectedQuestion].questionObject.question}
+            </p>
+          }
         </div>
 
         <div className="mt-3">
@@ -164,10 +171,7 @@ function IncorrectQuestions() {
               <OptionIncorrect
                 key={index}
                 index={index}
-                latex={
-                  quizState.incorrectQuestions[selectedQuestion].questionObject
-                    .latex
-                }
+                latex={quizState.incorrectQuestions[selectedQuestion].questionObject.latex}
                 option={option}
                 styles={style}
               />

@@ -9,7 +9,6 @@ import {QuestionCreation} from "./components/QuizCreation/QuestionCreation";
 export function App() {
   const [quizState, dispatch] = useContext(QuizContext)
 
-
   return (
     <div className="">
       {quizState.gameStage === "Start" && <WelcomePage />}

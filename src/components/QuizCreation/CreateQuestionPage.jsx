@@ -80,29 +80,27 @@ export function CreateQuestionPage({saveQuestion}) {
   }
 
   const [optionBeingEdited, setOptionBeingEdited] = useState("")
+  const [optionText, setOptionText] = useState("")
 
-  const editOption = (e, index) => {
-    e.preventDefault()
-
-    if(e.key === "Enter"){
-      var infos = questionInfo
-      infos.options[index] = e.target.value
-
-      setQuestionInfo(infos)
+  const editOption = (e, option) => {
+    switch(e.detail){
+      case 2:
+        setOptionBeingEdited(option)
+        break;
     }
   }
 
-  const selectEditingOption = (e, option) => {
-    e.preventDefault()
-    setOptionBeingEdited(option)
+  const completeOptionEditing = (e, index) => {
+    if(e.key === "Enter"){
+      var infos = questionInfo
+      infos.options[index] = optionText
+
+      setQuestionInfo(infos)
+      setOptionBeingEdited("")
+      setOptionText("")
+    }
   }
 
-  const changeOptionBeingEdit = (e, index) => {
-    var infos = questionInfo
-    infos.options[index] = e.target.value
-
-    setQuestionInfo(infos)
-  }
 
   return (
     <div className="py-5">
@@ -111,10 +109,7 @@ export function CreateQuestionPage({saveQuestion}) {
           {questionInfo.descriptions != []
             ? questionInfo.descriptions.map((description, index) => {
                 return (
-                  <div
-                    key={index}
-                    className="bg-zinc-100 p-2 px-4 rounded-lg w-max"
-                  >
+                  <div key={index} className="bg-zinc-100 p-2 px-4 rounded-lg w-max">
                     <p className="font-normal text-zinc-700">{description}</p>
                   </div>
                 );
@@ -122,15 +117,7 @@ export function CreateQuestionPage({saveQuestion}) {
             : ""}
 
           <div className="border-[0.7px] border-zinc-400 p-2 px-4 rounded-lg w-max">
-            <input
-              ref={descInput}
-              onKeyDown={onKeyPressed}
-              onChange={(e) => setCurrentDescription(e.target.value)}
-              value={currentDescription}
-              type="text"
-              className="font-normal text-zinc-700 bg-transparent outline-none"
-              placeholder="Descrição..."
-            />
+            <input ref={descInput} onKeyDown={onKeyPressed} onChange={(e) => setCurrentDescription(e.target.value)} value={currentDescription} type="text" className="font-normal text-zinc-700 bg-transparent outline-none" placeholder="Descrição..." />
           </div>
         </div>
 
@@ -166,7 +153,10 @@ export function CreateQuestionPage({saveQuestion}) {
                   </div>
                   
                   <div className={"flex items-center justify-center px-3 h-10 rounded-[0.4rem]"}>
-                    <span onKeyDown={(e) => editOption(e, index)} onChange={(e) => changeOptionBeingEdit(e, index)} contentEditable={optionBeingEdited === option} onClick={(e) => selectEditingOption(option)} className="font-normal text-[1.1rem] ">{option}</span>
+                    {
+                      optionBeingEdited !== option ? <span onClick={(e) => editOption(e, option)} className="font-normal text-[1.1rem] ">{option}</span> 
+                      : <input type="text" placeholder={option} value={optionText} onChange={(e) => {setOptionText(e.target.value)}} className="outline-none" onKeyDown={(e) => {completeOptionEditing(e, index)}}/>
+                    }
                   </div>
                   
                 </div>

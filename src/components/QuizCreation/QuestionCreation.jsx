@@ -1,7 +1,8 @@
 import React, { useContext, useState } from "react";
 import { QuizContext } from "../../context/quiz";
-import { Plus, Trash, TrashSimple } from "@phosphor-icons/react";
+import { Plus, Sparkle, Trash, TrashSimple } from "@phosphor-icons/react";
 import { CreateQuestionPage } from "./CreateQuestionPage";
+import AutoQuestion from "./AutoQuestion";
 
 // {
 //   question: "Qual é a principal diferença entre os conceitos de fotossíntese e respiração celular?",
@@ -16,6 +17,7 @@ export function QuestionCreation() {
   const [quizState, dispatch] = useContext(QuizContext)
   const [quizValues, setQuizValues] = useState({
     title: "",
+    nameCreator: "",
     questions: [],
   })
 
@@ -46,41 +48,92 @@ export function QuestionCreation() {
     setQuestionsCreation(false)
   }
 
+  const removeQuestion = (indexToRemove) => {
+    var questionsFiltered = quizValues.questions.filter((current, index) => {
+      return index !== indexToRemove
+    })
+
+    setQuizValues((current) => {
+      return {...current, questions: questionsFiltered}
+    })
+  }
+
+  const ableToSave = quizValues.title != "" && quizValues.nameCreator != "" && quizValues.questions != []
+  const buttonStyle = ableToSave ? "p-2 px-4 rounded-lg cursor-pointer font-medium bg-zinc-100 hover:bg-zinc-200 transition-all" : "p-2 px-4 text-zinc-600 rounded-lg cursor-not-allowed font-medium bg-zinc-100 transition-all"
+
+  const createQuiz = async () => {
+
+    const response = await fetch("http://localhost:3030/api/quiz/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(quizValues)
+    }).then((response) => {
+      if(response.status === 201) dispatch({type: "NEW_GAME"})
+    })
+  }
+
   return (
     <div>
       {
         questionsCreation ? <CreateQuestionPage saveQuestion={saveQuestion}/> : <div className="py-12">
 
-        <div>
-          <h1 className="text-4xl font-bold">Criação de Quiz</h1>
-          <p className="text-zinc-500">
-            Aqui, é possível criar um novo quiz, com quantas perguntas quiser!
-          </p>
+        <div className="flex justify-between">
+          <div>
+            <h1 className="text-4xl font-bold">Criação de Quiz</h1>
+            <p className="text-zinc-500">
+              Aqui, é possível criar um novo quiz, com quantas perguntas quiser!
+            </p>
+          </div>
+
+          <div className="flex gap-3 h-max">
+            <button className={buttonStyle} onClick={() => createQuiz()}>Criar</button>
+            <button onClick={() => dispatch({type: "NEW_GAME"})} className="p-2 px-4 rounded-lg font-medium border-[0.7px] border-zinc-300 hover:border-zinc-500 transition-all">Cancelar</button>
+          </div>
         </div>
   
-        <div className="mt-10">
-          <p className="font-semibold mb-1 text-zinc-700">Título</p>
-          <input type="text" placeholder="Ex. Química" value={quizValues.title} className="border-[0.7px] p-2 rounded-lg border-zinc-300 transition-all focus:border-zinc-700 outline-none" onChange={(e) => setQuizValues((current) => { return {...current, title: e.target.value}})}/>
+        <div className="mt-10 flex gap-10">
+          <div className="">
+            <p className="font-semibold mb-1 text-zinc-700">Título / Matéria</p>
+            <input type="text" placeholder="Ex. Química" value={quizValues.title} className="border-[0.7px] p-2 rounded-lg border-zinc-300 transition-all focus:border-zinc-700 outline-none" onChange={(e) => setQuizValues((current) => { return {...current, title: e.target.value}})}/>
+          </div>
+
+          <div className="">
+            <p className="font-semibold mb-1 text-zinc-700">Seu Nome</p>
+            <input type="text" placeholder="Ex. Eduardo Ferreira" value={quizValues.nameCreator} className="border-[0.7px] p-2 rounded-lg border-zinc-300 transition-all focus:border-zinc-700 outline-none" onChange={(e) => setQuizValues((current) => { return {...current, nameCreator: e.target.value}})}/>
+          </div>
         </div>
   
         <div className="mt-10 flex gap-2 flex-col">
           <h2 className="font-semibold text-xl">Questões</h2>
           <div className="flex flex-col gap-3">
-            <div onClick={() => {setQuestionsCreation(true)}} className="p-4 cursor-pointer mt-4 border-[0.7px] text-zinc-400 flex justify-center border-zinc-300 rounded-lg hover:border-zinc-500 hover:text-zinc-900 transition-all">
-              <Plus size={22} weight="bold"/>
+            <div className="flex mt-3 justify-between gap-3">
+              <div onClick={() => {setQuestionsCreation(true)}} className="p-4 flex gap-3 items-center cursor-pointer w-full border-[0.7px] text-zinc-400 justify-center border-zinc-300 rounded-lg hover:border-zinc-500 hover:text-zinc-900 transition-all">
+                <Plus size={22} weight="regular"/>
+                Adicionar Manualmente
+              </div>
+              <div className="w-full gap-3 p-4 flex items-center justify-center border-zinc-300 border-[0.7px] rounded-lg cursor-pointer hover:border-zinc-500 text-zinc-400 hover:text-zinc-900 transition-all">
+                <Sparkle size={22} weight="regular"/>
+                Organização Automática
+              </div>
             </div>
 
             {
 
               quizValues.questions ? (quizValues.questions.map((current, index) => {
                 return (
-                  <div key={index} className="flex p-4 border-[0.7px] border-zinc-300 hover:border-zinc-500 transition-all px-4 rounded-lg items-center">
-                    <p className="text-[1.1rem] pl-1 font-bold">{index < 10 ? `0${index+1}` : index+1}</p>
-                    <div className="flex flex-col pl-3">
-                      <p className="font-normal text-zinc-800">{truncate(current.question, 50)}</p>
-                      <p className="text-[0.9rem] text-zinc-500">{current.options.length} opções</p>
+                  <div key={index} className="flex justify-between p-4 border-[0.7px] border-zinc-300 hover:border-zinc-500 transition-all px-4 rounded-lg items-center">
+                    <div className="flex">
+                      <p className="text-[1.1rem] pl-1 font-bold">{index < 10 ? `0${index+1}` : index+1}</p>
+                      <div className="flex flex-col pl-3">
+                        <p className="font-normal text-zinc-800">{truncate(current.question, 50)}</p>
+                        <p className="text-[0.9rem] text-zinc-500">{current.options.length} opções</p>
+                      </div>
                     </div>
-                    <TrashSimple />
+                    <div onClick={() => {removeQuestion(index)}} className="mr-4 text-zinc-500 hover:text-zinc-700 transition-all cursor-pointer p-2">
+                      <TrashSimple size={22} weight="bold" alt={"Remover questão " + index}/>
+                    </div>
                   </div>
                 )
               })) : ""
@@ -90,7 +143,9 @@ export function QuestionCreation() {
         </div>
   
       </div>
-      }
+
+}
+    <AutoQuestion />
     </div>
   );
 }
