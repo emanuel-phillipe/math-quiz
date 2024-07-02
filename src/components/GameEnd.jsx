@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { QuizContext } from '../context/quiz'
+import Confetti from "react-confetti";
 
 function GameEnd() {
 
@@ -21,6 +22,9 @@ function GameEnd() {
 
   return (
     <div className='flex flex-col justify-center w-full h-screen items-center'>
+
+      <Confetti />
+
       <h2 className='text-4xl font-bold'>Fim de Jogo!</h2>
       <p className="text-zinc-500">Você chegou no final, parabéns por ter terminado!</p>
 
