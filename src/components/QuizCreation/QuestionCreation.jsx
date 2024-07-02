@@ -22,6 +22,7 @@ export function QuestionCreation() {
   })
 
   const [questionsCreation, setQuestionsCreation] = useState(false)
+  const [autoQuestion, setAutoQuestion] = useState(false)
 
   const truncate = (text, limit) => {
     if (text.length > limit) {
@@ -74,13 +75,18 @@ export function QuestionCreation() {
     })
   }
 
-  return (
-    <div>
+  const createAutoQuestion = (questionJson) => {
+    setAutoQuestion(questionJson)
+    setQuestionsCreation(true)
+  }
 
-      <AutoQuestion/>
-
-      {
-        questionsCreation ? <CreateQuestionPage saveQuestion={saveQuestion}/> : <div className="py-12">
+  const renderPage = () => {
+    if(questionsCreation){
+      return (<CreateQuestionPage cancelQuestion={() => {setQuestionsCreation(false)}} autoQuestion={autoQuestion} saveQuestion={saveQuestion}/>)
+    }else if(autoQuestion === true){
+      return (<AutoQuestion cancelCreation={() => {setAutoQuestion(false)}} createQuestion={createAutoQuestion}/>)
+    }else{
+      return (<div className="py-12">
 
         <div className="flex justify-between">
           <div>
@@ -111,12 +117,12 @@ export function QuestionCreation() {
         <div className="mt-10 flex gap-2 flex-col">
           <h2 className="font-semibold text-xl">Questões</h2>
           <div className="flex flex-col gap-3">
-            <div className="flex mt-3 justify-between gap-3">
+            <div className="flex mt-3 mb-4 justify-between gap-3">
               <div onClick={() => {setQuestionsCreation(true)}} className="p-4 flex gap-3 items-center cursor-pointer w-full border-[0.7px] text-zinc-400 justify-center border-zinc-300 rounded-lg hover:border-zinc-500 hover:text-zinc-900 transition-all">
                 <Plus size={22} weight="regular"/>
                 Adicionar Manualmente
               </div>
-              <div className="w-full gap-3 p-4 flex items-center justify-center border-zinc-300 border-[0.7px] rounded-lg cursor-pointer hover:border-zinc-500 text-zinc-400 hover:text-zinc-900 transition-all">
+              <div onClick={() => {setAutoQuestion(true)}} className="w-full gap-3 p-4 flex items-center justify-center border-zinc-300 border-[0.7px] rounded-lg cursor-pointer hover:border-zinc-500 text-zinc-400 hover:text-zinc-900 transition-all">
                 <Sparkle size={22} weight="regular"/>
                 Organização Automática
               </div>
@@ -146,8 +152,15 @@ export function QuestionCreation() {
         </div>
   
       </div>
-
+)
+  }
 }
+
+  return (
+    <div>
+      {
+        renderPage()
+      }
     </div>
   );
 }

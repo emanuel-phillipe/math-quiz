@@ -2,13 +2,18 @@ import { FunctionDeclarationSchemaType, GoogleGenerativeAI } from '@google/gener
 import React, { useState } from 'react'
 
 import OpenAI from "openai";
+import { Sparkle } from '@phosphor-icons/react';
+import { CircularProgress, ThemeProvider, createTheme } from '@mui/material';
 
 
-function AutoQuestion() {
+function AutoQuestion({createQuestion, cancelCreation}) {
 
   const [question, setQuestion] = useState("")
+  const [gptCorrection, setGptCorrection] = useState(null)
 
   const correctGPT = async () => {
+
+    setGptCorrection(false)
 
     const openai = new OpenAI({
       apiKey: import.meta.env.VITE_OPENAI_KEY,
@@ -38,7 +43,6 @@ function AutoQuestion() {
         }
       ],
       temperature: 1,
-      max_tokens: 256,
       top_p: 1,
       frequency_penalty: 0,
       presence_penalty: 0,
@@ -74,16 +78,41 @@ function AutoQuestion() {
         }
       ],
     });
+
+    console.log(response.choices[0].message.tool_calls[0].function.arguments);
     
     var responseJSON = JSON.parse(response.choices[0].message.tool_calls[0].function.arguments);
-    console.log(responseJSON);
+    setGptCorrection(null)
+    createQuestion(responseJSON)
 
   };
 
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#000000",
+      },
+    },
+  });
+
   return (
-    <div className='absolute left-0 p-4 px-12 backdrop-blur-sm w-full h-full'>
-      <div className='bg-zinc-100 p-4 rounded-lg'>
-        <textarea onChange={(e) => {setQuestion(e.target.value)}} value={question} className='w-full h-[20rem] outline-none' placeholder='A fotossíntese é um processo vital para a produção de energia em plantas. Qual das alternativas a seguir descreve corretamente o papel da clorofila na fotossíntese?
+    <ThemeProvider theme={theme}>
+    <div className='p-4 py-12 w-full h-full'>
+
+      <div className='flex justify-between'>
+        <div>
+          <h1 className="text-4xl font-bold">Questão Automática</h1>
+          <p className="text-zinc-500">
+            Coloque a questão como o recomendado abaixo e ela será organizada por I.A.
+          </p>
+        </div>
+        <div>
+          <button onClick={cancelCreation} className="p-2 px-4 rounded-lg font-medium border-[0.7px] border-zinc-300 text-zinc-500 hover:text-zinc-700 hover:border-zinc-500 transition-all">Cancelar</button>
+        </div>
+      </div>
+      
+      <div className=''>
+        <textarea onChange={(e) => {setQuestion(e.target.value)}} value={question} className='w-full h-[12rem] outline-none mt-8 rounded-lg text-justify' placeholder='A fotossíntese é um processo vital para a produção de energia em plantas. Qual das alternativas a seguir descreve corretamente o papel da clorofila na fotossíntese?
 
   A) A clorofila é responsável pela absorção de dióxido de carbono do ar.
   B) A clorofila é responsável pela produção de glicose a partir de água e luz solar.
@@ -92,9 +121,19 @@ function AutoQuestion() {
   E) A clorofila libera oxigênio como um subproduto durante a fase escura da fotossíntese.
 
   '></textarea>
-      <button onClick={() => correctGPT()}>Teste</button>
+      <button onClick={() => correctGPT()} className='w-full flex justify-center items-center gap-3 border-[0.7px] p-4 border-zinc-300 rounded-lg mt-10 hover:border-zinc-500 transition-all text-zinc-400 hover:text-zinc-700'>
+        {
+          gptCorrection === false ? <CircularProgress
+          size={24}
+          color="primary"
+        /> :
+        <Sparkle size={22} weight='regular'/>
+        }
+        Organizar Questão
+      </button>
       </div>
     </div>
+    </ThemeProvider>
   )
 }
 

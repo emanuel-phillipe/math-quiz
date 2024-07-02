@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { QuizContext } from "../../context/quiz";
 
-export function CreateQuestionPage({saveQuestion}) {
+export function CreateQuestionPage({saveQuestion, autoQuestion, cancelQuestion}) {
   const placeholder =
     "Aliquam gravida dui tincidunt ligula hendrerit, sed luctus ipsum egestas. Etiam et dui lacus. Sed in varius nisl, at tincidunt neque. Ut risus massa, efficitur ut diam sit amet, hendrerit vulputate est. Sed sodales justo in lorem posuere pharetra. Aliquam pellentesque egestas nunc a tincidunt. Aenean rutrum quis tellus ac auctor. Donec tempus varius lorem eget aliquet. Aliquam malesuada tempus semper.";
 
@@ -16,6 +16,12 @@ export function CreateQuestionPage({saveQuestion}) {
   const [currentDescription, setCurrentDescription] = useState("");
   const [currentOption, setCurrentOption] = useState("");
   const [ableToSave, setAbleToSave] = useState(false)
+  const [autoQuestionRegistered, setAutoQuestionRegistered] = useState(false)
+
+  if(autoQuestion && !autoQuestionRegistered){
+    setQuestionInfo({question: autoQuestion.statement, options: autoQuestion.options, answer: autoQuestion.answer, descriptions: [], latex: false})
+    setAutoQuestionRegistered(true)
+  }
 
   useEffect(() => {
     var able = false
@@ -69,7 +75,7 @@ export function CreateQuestionPage({saveQuestion}) {
   const latexOptionButtonTrue = questionInfo.latex ? "p-2 px-4 text-zinc-50 bg-zinc-800 font-semibold transition-all rounded-lg": "p-2 px-4 text-zinc-700 border-zinc-700 font-semibold border-[0.7px] hover:border-zinc-700 transition-all rounded-lg"
   const latexOptionButtonFalse = !questionInfo.latex ? "p-2 px-4 text-zinc-50 bg-zinc-800 font-semibold transition-all rounded-lg": "p-2 px-4 text-zinc-700 border-zinc-700 font-semibold border-[0.7px] hover:border-zinc-700 transition-all rounded-lg"
 
-  const saveOption = ableToSave ? "border-zinc-400 hover:border-zinc-600 transition-all cursor-pointer text-zinc-400 hover:text-zinc-600 border-[0.7px] p-2 px-4 rounded-lg w-max" : "border-zinc-400 transition-all cursor-not-allowed text-zinc-400 border-[0.7px] p-2 px-4 rounded-lg w-max"
+  const saveOption = ableToSave ? "p-2 px-4 rounded-lg font-medium border-[0.7px] border-zinc-300 hover:border-zinc-500 transition-all" : "cursor-not-allowed p-2 px-4 rounded-lg font-medium border-[0.7px] border-zinc-300 transition-all"
 
   const correctOptionSelection = (option) => {
     if(option === questionInfo.answer){
@@ -121,10 +127,11 @@ export function CreateQuestionPage({saveQuestion}) {
           </div>
         </div>
 
-        <div>
+        <div className="flex gap-3">
           <div className={saveOption} onClick={() => {saveQuestion(questionInfo)}}>
             <p className="">Salvar</p>
           </div>
+            <button onClick={cancelQuestion} className="p-2 px-4 rounded-lg font-medium border-[0.7px] border-zinc-300 hover:border-zinc-500 transition-all">Cancelar</button>
         </div>
       </div>
       <textarea
@@ -152,9 +159,9 @@ export function CreateQuestionPage({saveQuestion}) {
                     <p className='font-semibold text-[1.1rem] '>{optionsLetters[index]}</p>
                   </div>
                   
-                  <div className={"flex items-center justify-center px-3 h-10 rounded-[0.4rem]"}>
+                  <div className={"flex items-center justify-center px-3 h-16 rounded-[0.4rem]"}>
                     {
-                      optionBeingEdited !== option ? <span onClick={(e) => editOption(e, option)} className="font-normal text-[1.1rem] ">{option}</span> 
+                      optionBeingEdited !== option ? <span onClick={(e) => editOption(e, option)} className="font-normal text-[1rem] ">{option}</span> 
                       : <input type="text" placeholder={option} value={optionText} onChange={(e) => {setOptionText(e.target.value)}} className="outline-none" onKeyDown={(e) => {completeOptionEditing(e, index)}}/>
                     }
                   </div>
