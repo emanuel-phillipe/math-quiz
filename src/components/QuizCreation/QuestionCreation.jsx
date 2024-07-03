@@ -64,7 +64,7 @@ export function QuestionCreation() {
 
   const createQuiz = async () => {
 
-    const response = await fetch(import.meta.env.VITE_API + "/api/quiz/create", {
+    const response = await fetch("http://localhost:3030/api/quiz/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

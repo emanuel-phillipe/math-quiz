@@ -23,7 +23,7 @@ function GameEnd() {
   return (
     <div className='flex flex-col justify-center w-full h-screen items-center'>
 
-      <Confetti />
+      {quizState.score >= (0.5 * quizState.questions.length) && <Confetti />}
 
       <h2 className='text-4xl font-bold'>Fim de Jogo!</h2>
       <p className="text-zinc-500">Você chegou no final, parabéns por ter terminado!</p>

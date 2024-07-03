@@ -9,24 +9,24 @@ export function WelcomePage(){
   const [history, setHistory] = useState(false)
 
   useEffect(() => {
-    fetch(import.meta.env.VITE_API + "/api/quiz/all").then(response => response.json())
+    fetch("http://localhost:3030/api/quiz/all").then(response => response.json())
     .then(data=> {
       dispatch({type: "UPDATE_QUIZES", payload: {quizes: data}})
     })
   })
 
   return (
-    <div className="py-12">
+    <div className="py-[2rem] md:py-10">
 
       <HistoryPage hidden={history} setHidden={() => setHistory(false)}/>
 
       <div className="flex justify-between">
         <div>
           <h1 className="text-4xl font-bold">Quiz</h1>
-          <p className="text-zinc-500">Seja muuito bem-vindo(a)! Para começar, é só clicar em algum quiz!</p>
+          <p className="text-zinc-500 mr-5">Seja muuito bem-vindo(a)! Para começar, é só clicar em algum quiz!</p>
         </div>
 
-        <div className="flex gap-3">
+        <div className="flex flex-col gap-3 md:flex-row">
 
           <div className="p-2 bg-zinc-100 text-zinc-600 h-max rounded-lg cursor-not-allowed transition-all" onClick={() => setHistory(false)}>
             <ClockCounterClockwise size={22} alt="Em desenvolvimento"/>
@@ -50,16 +50,11 @@ export function WelcomePage(){
 
       </div>
 
-      <footer className="absolute bottom-0 mb-12">
+      <footer className="absolute bottom-0 left-0 mb-5 px-6 w-full md:left-auto md:w-max">
         <div className="flex gap-3">
-          <div className="bg-zinc-50 p-2 px-4 rounded-lg w-max">
+          <div className="bg-zinc-100 text-center p-2 px-4 rounded-lg w-full md:text-left md:w-max">
             <p className="font-medium text-zinc-700">Trabalho Trilha</p>
             <p className="font-normal text-[0.9rem] text-zinc-500">Pensamento Computacional (PCP)</p>
-          </div>
-
-          <div className="bg-zinc-50 p-2 px-4 rounded-lg">
-            <p className="font-medium text-zinc-700">Participantes</p>
-            <p className="font-normal text-[0.9rem] text-zinc-500">Ana Carolina, Emanuel Phillipe, Gabriel Damasio, Luciana Gomes, Marcos Contijo</p>
           </div>
         </div>
       </footer>
