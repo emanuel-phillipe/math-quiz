@@ -9,7 +9,7 @@ export function WelcomePage(){
   const [history, setHistory] = useState(false)
 
   useEffect(() => {
-    fetch("http://localhost:3030/api/quiz/all").then(response => response.json())
+    fetch(import.meta.env.VITE_API + "/api/quiz/all").then(response => response.json())
     .then(data=> {
       dispatch({type: "UPDATE_QUIZES", payload: {quizes: data}})
     })
