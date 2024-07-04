@@ -96,13 +96,13 @@ export function QuestionCreation() {
             </p>
           </div>
 
-          <div className="flex gap-3 h-max">
+          <div className="flex flex-col ml-3 md:flex-row gap-3 h-max">
             <button className={buttonStyle} onClick={() => createQuiz()}>Criar</button>
             <button onClick={() => dispatch({type: "NEW_GAME"})} className="p-2 px-4 rounded-lg font-medium border-[0.7px] border-zinc-300 hover:border-zinc-500 transition-all">Cancelar</button>
           </div>
         </div>
   
-        <div className="mt-10 flex gap-10">
+        <div className="mt-10 flex flex-col md:flex-row gap-10">
           <div className="">
             <p className="font-semibold mb-1 text-zinc-700">Título / Matéria</p>
             <input type="text" placeholder="Ex. Química" value={quizValues.title} className="border-[0.7px] p-2 rounded-lg border-zinc-300 transition-all focus:border-zinc-700 outline-none" onChange={(e) => setQuizValues((current) => { return {...current, title: e.target.value}})}/>
