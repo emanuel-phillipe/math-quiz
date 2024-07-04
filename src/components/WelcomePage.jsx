@@ -53,8 +53,8 @@ export function WelcomePage(){
       <footer className="absolute bottom-0 left-0 mb-5 px-6 w-full md:left-auto md:w-max">
         <div className="flex gap-3">
           <div className="bg-zinc-100 text-center p-2 px-4 rounded-lg w-full md:text-left md:w-max">
-            <p className="font-medium text-zinc-700">Trabalho Trilha</p>
-            <p className="font-normal text-[0.9rem] text-zinc-500">Pensamento Computacional (PCP)</p>
+            <p className="font-medium text-zinc-700">Trabalho PVA</p>
+            <p className="font-normal text-[0.9rem] text-zinc-500">Quiz ENEM</p>
           </div>
         </div>
       </footer>
