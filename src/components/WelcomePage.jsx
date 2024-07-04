@@ -50,7 +50,7 @@ export function WelcomePage(){
 
       </div>
 
-      <footer className="absolute bottom-0 left-0 mb-5 px-6 w-full md:left-auto md:w-max">
+      <footer className="absolute bottom-0 left-0 mb-5 px-6 w-full md:left-auto md:px-0 md:w-max">
         <div className="flex gap-3">
           <div className="border-zinc-300 border-[0.7px] text-center p-2 px-4 rounded-lg w-full md:text-left md:w-max">
             <p className="font-medium text-zinc-700">Trabalho PVA</p>
