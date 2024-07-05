@@ -2,6 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react"
 import { QuizContext } from "../context/quiz"
 import Option from "./Option"
 import Latex from "react-latex"
+import CancelWidget from "./CancelWidget"
 
 export const Question = () => {
 
@@ -97,25 +98,33 @@ export const Question = () => {
 
   return (
     <div className="py-5 outline-none" onKeyDown={onKey} tabIndex={-1} ref={questionRef}>
-      <div className="flex gap-3 mt-8">
-        <div className="bg-zinc-100 p-2 px-4 rounded-lg w-max">
-          <p className="font-normal text-zinc-700"><span className="font-bold text-zinc-950">{quizState.currentQuestion+1}</span> de {quizState.questions.length}</p>
-        </div>
-        {
-          currentQuestion.descriptions.map((description, index) => {
-            return (
-              <div key={index} className="bg-zinc-100 p-2 px-4 rounded-lg w-max">
-                <p className="font-normal text-zinc-700">{description}</p>
-              </div>
-            )
-          })
-        }
-        <div className="bg-zinc-100 p-2 rounded-lg w-[6rem] flex justify-center">
+
+      {/* <CancelWidget /> */}
+
+      <div className="flex justify-between gap-3 mt-8">
+        <div className="flex gap-3">
+          <div className="bg-zinc-100 p-2 px-4 rounded-lg w-max">
+            <p className="font-normal text-zinc-700"><span className="font-bold text-zinc-950">{quizState.currentQuestion+1}</span> de {quizState.questions.length}</p>
+          </div>
           {
-            timerWidget()
+            currentQuestion.descriptions.map((description, index) => {
+              return (
+                <div key={index} className="bg-zinc-100 p-2 px-4 rounded-lg w-max">
+                  <p className="font-normal text-zinc-700">{description}</p>
+                </div>
+              )
+            })
           }
-          
+          <div className="bg-zinc-100 p-2 rounded-lg w-[6rem] flex justify-center">
+            {
+              timerWidget()
+            }
+            
+          </div>
         </div>
+        <button onClick={() => {dispatch({type: "NEW_GAME"})}}  className="border-[0.7px] p-2 px-4 rounded-lg border-zinc-300 text-zinc-500 hover:border-zinc-600 hover:text-zinc-500 font-medium transition-all">
+          Desistir
+        </button>
       </div>
 
       <div className="mt-3 text-justify text-zinc-800 text-[1rem]">
