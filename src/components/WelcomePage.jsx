@@ -43,12 +43,6 @@ export function WelcomePage(){
 
       <div className="mt-10 grid gap-1 lg:grid-cols-1 gap-3 grid-rows-5">
 
-       <div className="flex gap-3 flex-col">
-          <Skeleton animation="wave" variant="rectangular" width={300} height={70} hidden={quizState.subjects == []}/>
-          <Skeleton animation="wave" variant="rectangular" width={300} height={70} hidden={quizState.subjects == []}/>
-          <Skeleton animation="wave" variant="rectangular" width={300} height={70} hidden={quizState.subjects == []}/>
-        </div>
-
         {
           quizState.subjects.map((subject, index) => {
             return (<QuizOption key={index} title={subject.title} desc={subject.questions.length + " questões objetivas"} disabled={false} click={() => dispatch({type: "SELECT_QUESTION_AND_SORT", payload: {index}})}/>)
