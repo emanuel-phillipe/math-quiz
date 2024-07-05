@@ -3,13 +3,14 @@ import { QuizContext } from "../context/quiz"
 import QuizOption from "./QuizOption"
 import { ClockCounterClockwise, Plus } from "@phosphor-icons/react"
 import HistoryPage from "./History"
+import { Skeleton } from "@mui/material"
 
 export function WelcomePage(){
   const [quizState, dispatch] = useContext(QuizContext)
   const [history, setHistory] = useState(false)
 
   useEffect(() => {
-    fetch(import.meta.env.VITE_API + "/api/quiz/all").then(response => response.json())
+    fetch(import.meta.env.VITE_API + "/api/quiz/").then(response => response.json())
     .then(data=> {
       dispatch({type: "UPDATE_QUIZES", payload: {quizes: data}})
     })
@@ -42,6 +43,12 @@ export function WelcomePage(){
 
       <div className="mt-10 grid gap-1 lg:grid-cols-1 gap-3 grid-rows-5">
 
+       <div className="flex gap-3 flex-col">
+          <Skeleton animation="wave" variant="rectangular" width={300} height={70} hidden={quizState.subjects == []}/>
+          <Skeleton animation="wave" variant="rectangular" width={300} height={70} hidden={quizState.subjects == []}/>
+          <Skeleton animation="wave" variant="rectangular" width={300} height={70} hidden={quizState.subjects == []}/>
+        </div>
+
         {
           quizState.subjects.map((subject, index) => {
             return (<QuizOption key={index} title={subject.title} desc={subject.questions.length + " questões objetivas"} disabled={false} click={() => dispatch({type: "SELECT_QUESTION_AND_SORT", payload: {index}})}/>)
@@ -53,8 +60,8 @@ export function WelcomePage(){
       <footer className="absolute bottom-0 left-0 mb-5 px-6 w-full md:left-auto md:px-0 md:w-max">
         <div className="flex gap-3">
           <div className="border-zinc-300 border-[0.7px] text-center p-2 px-4 rounded-lg w-full md:text-left md:w-max">
-            <p className="font-medium text-zinc-700">Trabalho PVA</p>
-            <p className="font-normal text-[0.9rem] text-zinc-500">Quiz ENEM</p>
+            <p className="font-medium text-zinc-700">Trabalho Trilha</p>
+            <p className="font-normal text-[0.9rem] text-zinc-500">Quiz</p>
           </div>
         </div>
       </footer>
