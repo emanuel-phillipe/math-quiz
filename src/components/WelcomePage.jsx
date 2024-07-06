@@ -21,7 +21,7 @@ export function WelcomePage(){
 
       <HistoryPage hidden={history} setHidden={() => setHistory(false)}/>
 
-      <div className="flex justify-between">
+      <header className="flex justify-between backdrop-blur-sm">
         <div>
           <h1 className="text-4xl font-bold">Quiz</h1>
           <p className="text-zinc-500 mr-5">Seja muuito bem-vindo(a)! Para começar, é só clicar em algum quiz!</p>
@@ -39,9 +39,9 @@ export function WelcomePage(){
 
         </div>
         
-      </div>
+      </header>
 
-      <div className="mt-10 grid gap-1 lg:grid-cols-1 gap-3 grid-rows-5">
+      <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-3 grid-rows-5">
 
         {
           quizState.subjects.map((subject, index) => {
@@ -51,7 +51,7 @@ export function WelcomePage(){
 
       </div>
 
-      <footer className="absolute bottom-0 left-0 mb-5 px-6 w-full md:left-auto md:px-0 md:w-max">
+      <footer className="bottom-0 left-0 mb-5 px-6 w-full md:left-auto md:px-0 md:w-max backdrop-blur-sm fixed">
         <div className="flex gap-3">
           <div className="border-zinc-300 border-[0.7px] text-center p-2 px-4 rounded-lg w-full md:text-left md:w-max">
             <p className="font-medium text-zinc-700">Trabalho Trilha</p>

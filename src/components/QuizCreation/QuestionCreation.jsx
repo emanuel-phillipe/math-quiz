@@ -88,7 +88,7 @@ export function QuestionCreation() {
     }else{
       return (<div className="py-12">
 
-        <div className="flex justify-between">
+        <div className="flex justify-between backdrop-blur-sm">
           <div>
             <h1 className="text-4xl font-bold">Criação de Quiz</h1>
             <p className="text-zinc-500">
