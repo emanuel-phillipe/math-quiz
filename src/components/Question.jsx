@@ -96,7 +96,7 @@ export const Question = () => {
   }
 
   return (
-    <div className="py-5 outline-none" onKeyDown={onKey} tabIndex={-1} ref={questionRef}>
+    <div className="py-1 md:py-5 outline-none" onKeyDown={onKey} tabIndex={-1} ref={questionRef}>
       <div className="flex gap-3 mt-8 flex-col md:flex-row justify-between">
         <div className="flex gap-3 justify-between">
           <div className="bg-zinc-100 p-2 px-4 rounded-lg w-max flex justify-center items-center">
@@ -148,7 +148,11 @@ export const Question = () => {
           })}
         </div>
 
-      <div className="mt-5">
+        <div className="h-24">
+          {/* Div para aumentar a distância entre o botão fixo e a última opção */}
+        </div>
+
+      <div className="fixed w-full px-[2rem] py-[1] md:px-[5rem] xl:px-[8rem] bottom-0 left-0 p-6 backdrop-blur-sm md:mb-10">
         {currentSelection.option != "" ? <button className={"p-5 w-full rounded-[0.5rem] transition-all text-zinc-50 font-medium bg-zinc-700 hover:bg-zinc-900"} onClick={() => onContinue()}>Continuar</button> :
         <button disabled className={"p-5 w-full rounded-[0.5rem] transition-all text-zinc-50 font-medium bg-zinc-500 cursor-not-allowed"}>Continuar</button>}
         
