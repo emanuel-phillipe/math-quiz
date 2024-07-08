@@ -116,7 +116,7 @@ export const Question = () => {
                 )
               })
             }
-            <div className="bg-zinc-100 p-2 rounded-lg w-[6rem] flex justify-center items-center">
+            <div className="bg-zinc-100 p-2 rounded-lg px-6 flex justify-center w-full items-center">
               {
                 timerWidget()
               }
