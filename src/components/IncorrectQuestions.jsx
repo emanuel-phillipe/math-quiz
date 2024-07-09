@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { QuizContext } from "../context/quiz";
 import Latex from "react-latex";
 import OptionIncorrect from "./OptionIncorrect";
@@ -13,6 +13,35 @@ function IncorrectQuestions() {
   const [corrections, setCorrections] = useState([]);
   const [currentCorrection, setCurrentCorrect] = useState("");
   const [geminiProgress, setGeminiProgress] = useState(false);
+
+  const questionRef = useRef(null);
+  
+  useEffect(() => { // FOCA NA DIV PRO CONTROLE NO TECLADO FUNCIONAR
+    questionRef.current.focus()
+  })
+
+
+  useEffect(() => { // ADICIONAR O EVENTO NA JANELA DA QUESTÃO
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  },[selectedQuestion]);
+
+  const onKey = (event) => {
+    if(event.key === "ArrowLeft"){
+      var questionToBack = selectedQuestion - 1
+      
+      if(questionToBack < 0) questionToBack = quizState.incorrectQuestions.length - 1;
+
+      setSelectedQuestion(questionToBack)
+    
+    }else if(event.key === "ArrowRight"){ 
+      var questionToGo = selectedQuestion + 1
+
+      if(questionToGo >= quizState.incorrectQuestions.length) questionToGo = 0;
+      
+      setSelectedQuestion(questionToGo)
+    }
+  }
 
   const theme = createTheme({
     palette: {
@@ -96,12 +125,13 @@ function IncorrectQuestions() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="py-20 px-[0.5rem] xl:px-[8rem]">
+      <div className="py-4 md:py-12 px-[0.5rem] xl:px-[8rem]" ref={questionRef}>
         <div className="flex mb-5 gap-3 justify-between">
           <div
             onClick={() => dispatch({ type: "QUIZ_END" })}
-            className="p-2 px-4 text-center flex items-center cursor-pointer transition-all rounded-lg w-max font-medium bg-zinc-100 hover:bg-zinc-200"
+            className="p-3 px-4 gap-4 font-semibold md:w-max text-center flex items-center cursor-pointer transition-all rounded-lg w-full justify-center bg-zinc-100 hover:bg-zinc-200"
           >
+            
             <ArrowLeft
               size={20}
               weight="bold"
@@ -110,7 +140,7 @@ function IncorrectQuestions() {
           </div>
         </div>
 
-        <div className="flex gap-3 justify-between">
+        <div className="grid grid-cols-3 sm:grid-cols-6 md:flex gap-3 justify-between w-full">
           {quizState.incorrectQuestions.map((question, index) => {
             const style =
               selectedQuestion === index
@@ -179,14 +209,14 @@ function IncorrectQuestions() {
           })}
         </div>
 
-        <div className="text-justify w-full">
-          <div className="flex items-end gap-2">
+        <div className="text-left w-full">
+          <div className="flex flex-col md:flex-row md:items-end items-start gap-1 md:gap-2 mb-3 md:mb-0">
             <h2 className="text-2xl font-bold">Explicação da Questão</h2>
             <span className="text-[0.9rem] text-zinc-500 font-semibold">
               EM FASE DE TESTES
             </span>
           </div>
-          <p className="text-zinc-500 mb-4">
+          <p className="text-zinc-500 mb-5">
             Em um passe de mágica, suas perguntas serão respondidas com I.A.
           </p>
 

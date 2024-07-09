@@ -110,13 +110,13 @@ export const Question = () => {
             {
               currentQuestion.descriptions.map((description, index) => {
                 return (
-                  <div key={index} className="bg-zinc-100 p-2 px-4 rounded-lg justify-center w-full text-center flex items-center">
+                  <div key={index} className="bg-zinc-100 p-2 px-4 rounded-lg justify-center w-full md:w-max text-center flex items-center">
                     <p className="font-normal text-zinc-700">{description}</p>
                   </div>
                 )
               })
             }
-            <div className="bg-zinc-100 p-2 rounded-lg px-6 flex justify-center w-full items-center">
+            <div className="bg-zinc-100 p-2 rounded-lg px-6 flex justify-center w-full md:w-max items-center">
               {
                 timerWidget()
               }
