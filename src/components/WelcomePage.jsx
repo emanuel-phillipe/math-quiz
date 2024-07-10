@@ -14,7 +14,7 @@ export function WelcomePage(){
     .then(data=> {
       dispatch({type: "UPDATE_QUIZES", payload: {quizes: data}})
     })
-  })
+  }) 
 
   return (
     <div className="py-[2rem] md:py-10">
