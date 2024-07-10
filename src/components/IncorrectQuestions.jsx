@@ -15,7 +15,7 @@ function IncorrectQuestions() {
   const [geminiProgress, setGeminiProgress] = useState(false);
 
   const questionRef = useRef(null);
-  
+
   useEffect(() => { // FOCA NA DIV PRO CONTROLE NO TECLADO FUNCIONAR
     questionRef.current.focus()
   })
