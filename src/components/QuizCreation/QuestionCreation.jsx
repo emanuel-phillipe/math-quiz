@@ -62,7 +62,7 @@ export function QuestionCreation() {
 
   const ableToSave = quizValues.title != "" && quizValues.nameCreator != "" && quizValues.questions.length > 0
   const buttonStyle = ableToSave ? "p-2 px-4 rounded-lg cursor-pointer font-medium bg-zinc-100 hover:bg-zinc-200 transition-all" : "p-2 px-4 text-zinc-600 rounded-lg cursor-not-allowed font-medium bg-zinc-100 transition-all"
-  const buttonStyleMobile = "p-4 w-full rounded-lg cursor-pointer font-medium bg-zinc-100  transition-all"
+  const buttonStyleMobile = ableToSave ? "p-4 w-full rounded-lg cursor-pointer font-medium bg-zinc-100  transition-all" : "p-4 w-full rounded-lg cursor-not-allowed font-medium bg-zinc-100  transition-all"
 
   const createQuiz = async () => {
 
