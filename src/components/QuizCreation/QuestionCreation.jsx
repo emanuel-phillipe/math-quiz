@@ -100,7 +100,7 @@ export function QuestionCreation() {
 
           <div className="flex flex-col ml-3 md:flex-row gap-3 h-max">
             {
-              isMobile ? "" : <button className={buttonStyle} onClick={() => createQuiz()}>Criar</button>
+              isMobile ? "" : <button className={buttonStyle} onClick={() => createQuiz()} disabled={ableToSave}>Criar</button>
             }
             <button onClick={() => dispatch({type: "NEW_GAME"})} className="p-2 px-4 rounded-lg font-medium border-[0.7px] border-zinc-300 hover:border-zinc-500 transition-all">Cancelar</button>
           </div>
@@ -157,7 +157,7 @@ export function QuestionCreation() {
 
         {
           isMobile ? <footer className="fixed backdrop-blur-md bottom-0 w-full left-0 px-[2rem] py-5 md:py-8 md:px-[5rem]">
-          <button className={buttonStyleMobile} onClick={() => createQuiz()}>Criar Quiz</button>
+          <button className={buttonStyleMobile} onClick={() => createQuiz()} disabled={ableToSave}>Criar Quiz</button>
         </footer> : ""
         }
   
