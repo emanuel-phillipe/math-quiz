@@ -1,19 +1,34 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-function QuizOption({title, desc, click, disabled}) {
+function QuizOption({title, desc, questionNumber, click, subject}) {
 
-  const classStyles = {
-    div: disabled ? "bg-zinc-50 rounded-[0.5rem] p-4 w-full md:w-max transition-all cursor-not-allowed" : "bg-zinc-100 rounded-[0.5rem] p-3 px-4 w-full md:w-full hover:bg-zinc-200 transition-all cursor-pointer",
-    title: disabled ? "text-[1.1rem] font-semibold text-zinc-500" : "text-[1.1rem] font-semibold",
-    desc: disabled ? "text-[0.9rem] text-zinc-400" : "text-[0.9rem] text-zinc-600"
+  const classAndTextStyles = {
+    div: "border-[0.7px] border-zinc-300 rounded-[0.5rem] p-3 px-4 w-full md:w-full h-max hover:border-zinc-600 transition-all cursor-pointer",
+    title: "text-[1.1rem] font-semibold",
+    desc: "text-[0.9rem] text-zinc-600",
+    questionsText: questionNumber == 1 ? questionNumber + " questão objetiva" : questionNumber + " questões objetivas"
   }
 
+  const [creatorsWidget, setCreatorsWidget] = useState(false)
+
   return (
-      <div onClick={click} className={classStyles.div}>
-        <h3 className={classStyles.title}>{title}</h3>
-        <p className={classStyles.desc}>{desc}</p>
+      <div onClick={click} onMouseEnter={() => {setCreatorsWidget(true)}} onMouseLeave={() => {setCreatorsWidget(false)}} className={classAndTextStyles.div}>
+        <h3 className={classAndTextStyles.title}>{title}</h3>
+        <p className={classAndTextStyles.desc}>{classAndTextStyles.questionsText}</p>
+
+        {
+          <div className='mt-4 flex gap-3'>
+          {
+            subject.nameCreator.map((name, index) => {
+              return <p key={index} className='bg-zinc-100 p-2 w-max text-[0.9rem] rounded-md'>{name}</p>
+            })
+          }
+        </div>
+        }
       </div>
   )
 }
 
 export default QuizOption
+
+//     div: "bg-zinc-100 rounded-[0.5rem] p-3 px-4 w-full md:w-full hover:bg-zinc-200 transition-all cursor-pointer",

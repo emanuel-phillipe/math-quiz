@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import { QuizContext } from "../context/quiz"
 import QuizOption from "./QuizOption"
-import { ClockCounterClockwise, Plus } from "@phosphor-icons/react"
+import { ClockCounterClockwise, Plus, User } from "@phosphor-icons/react"
 import HistoryPage from "./History"
 import { Skeleton } from "@mui/material"
 
@@ -35,7 +35,11 @@ export function WelcomePage(){
 
           <div className="bg-zinc-100 flex h-max items-center gap-2 rounded-[0.5rem] p-2 w-max hover:bg-zinc-200 transition-all cursor-pointer" onClick={() => dispatch({type: "QUIZ_CREATION"})}>
             <Plus size={22} alt="Criar quiz"/>
-        </div>
+          </div>
+
+          <div className="bg-zinc-100 flex h-max items-center gap-2 rounded-[0.5rem] p-2 w-max hover:bg-zinc-200 transition-all cursor-pointer">
+            <User size={22} alt="Conta pessoal"/>
+          </div>
 
         </div>
         
@@ -45,7 +49,7 @@ export function WelcomePage(){
 
         {
           quizState.subjects.map((subject, index) => {
-            return (<QuizOption key={index} title={subject.title} desc={subject.questions.length + " questões objetivas"} disabled={false} click={() => dispatch({type: "SELECT_QUESTION_AND_SORT", payload: {index}})}/>)
+            return (<QuizOption key={index} title={subject.title} questionNumber={subject.questions.length} subject={subject} click={() => dispatch({type: "SELECT_QUESTION_AND_SORT", payload: {index}})}/>)
           })
         }
 
