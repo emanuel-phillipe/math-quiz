@@ -90,7 +90,7 @@ export function QuestionCreation() {
     }else if(autoQuestion === true){
       return (<AutoQuestion cancelCreation={() => {setAutoQuestion(false)}} createQuestion={createAutoQuestion}/>)
     }else{
-      return (<div className="py-12">
+      return (<div className="py-3 md:py-7">
 
         <div className="flex justify-between backdrop-blur-sm">
           <div>

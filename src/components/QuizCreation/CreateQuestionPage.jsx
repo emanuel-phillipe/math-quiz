@@ -112,7 +112,7 @@ export function CreateQuestionPage({saveQuestion, autoQuestion, cancelQuestion})
 
 
   return (
-    <div className="py-5">
+    <div className="py-1 md:py-8">
       <div className="mb-3 flex justify-between gap-3">
         <div className="flex gap-3">
           {questionInfo.descriptions != []
