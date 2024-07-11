@@ -3,6 +3,7 @@ import { QuizContext } from "../../context/quiz";
 import { Plus, Sparkle, Trash, TrashSimple } from "@phosphor-icons/react";
 import { CreateQuestionPage } from "./CreateQuestionPage";
 import AutoQuestion from "./AutoQuestion";
+import { isMobile } from "react-device-detect";
 
 // {
 //   question: "Qual é a principal diferença entre os conceitos de fotossíntese e respiração celular?",
@@ -59,8 +60,9 @@ export function QuestionCreation() {
     })
   }
 
-  const ableToSave = quizValues.title != "" && quizValues.nameCreator != "" && quizValues.questions != []
+  const ableToSave = quizValues.title != "" && quizValues.nameCreator != "" && quizValues.questions.length > 0
   const buttonStyle = ableToSave ? "p-2 px-4 rounded-lg cursor-pointer font-medium bg-zinc-100 hover:bg-zinc-200 transition-all" : "p-2 px-4 text-zinc-600 rounded-lg cursor-not-allowed font-medium bg-zinc-100 transition-all"
+  const buttonStyleMobile = "p-4 w-full rounded-lg cursor-pointer font-medium bg-zinc-100  transition-all"
 
   const createQuiz = async () => {
 
@@ -97,7 +99,9 @@ export function QuestionCreation() {
           </div>
 
           <div className="flex flex-col ml-3 md:flex-row gap-3 h-max">
-            <button className={buttonStyle} onClick={() => createQuiz()}>Criar</button>
+            {
+              isMobile ? "" : <button className={buttonStyle} onClick={() => createQuiz()}>Criar</button>
+            }
             <button onClick={() => dispatch({type: "NEW_GAME"})} className="p-2 px-4 rounded-lg font-medium border-[0.7px] border-zinc-300 hover:border-zinc-500 transition-all">Cancelar</button>
           </div>
         </div>
@@ -117,7 +121,7 @@ export function QuestionCreation() {
         <div className="mt-10 flex gap-2 flex-col">
           <h2 className="font-semibold text-xl">Questões</h2>
           <div className="flex flex-col gap-3">
-            <div className="flex mt-3 mb-4 justify-between gap-3">
+            <div className="flex flex-col md:flex-row mt-3 mb-4 justify-between gap-3">
               <div onClick={() => {setQuestionsCreation(true)}} className="p-4 flex gap-3 items-center cursor-pointer w-full border-[0.7px] text-zinc-400 justify-center border-zinc-300 rounded-lg hover:border-zinc-500 hover:text-zinc-900 transition-all">
                 <Plus size={22} weight="regular"/>
                 Adicionar Manualmente
@@ -150,6 +154,12 @@ export function QuestionCreation() {
             }
           </div>
         </div>
+
+        {
+          isMobile ? <footer className="fixed backdrop-blur-md bottom-0 w-full left-0 px-[2rem] py-5 md:py-8 md:px-[5rem]">
+          <button className={buttonStyleMobile} onClick={() => createQuiz()}>Criar Quiz</button>
+        </footer> : ""
+        }
   
       </div>
 )
