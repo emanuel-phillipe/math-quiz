@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { QuizContext } from "../../context/quiz";
+import { isMobile } from "react-device-detect";
 
 export function CreateQuestionPage({saveQuestion, autoQuestion, cancelQuestion}) {
   const placeholder =
@@ -76,6 +77,8 @@ export function CreateQuestionPage({saveQuestion, autoQuestion, cancelQuestion})
   const latexOptionButtonFalse = !questionInfo.latex ? "p-2 px-4 text-zinc-50 bg-zinc-800 font-semibold transition-all rounded-lg": "p-2 px-4 text-zinc-700 border-zinc-700 font-semibold border-[0.7px] hover:border-zinc-700 transition-all rounded-lg"
 
   const saveOption = ableToSave ? "p-2 px-4 rounded-lg font-medium border-[0.7px] border-zinc-300 hover:border-zinc-500 transition-all" : "cursor-not-allowed p-2 px-4 rounded-lg font-medium border-[0.7px] border-zinc-300 transition-all"
+  const saveOptionMobile = ableToSave ? "p-2 rounded-lg font-medium bg-zinc-100 py-3 w-full transition-all" : "cursor-not-allowed text-zinc-700 text-center bg-zinc-100 p-2 py-3 px-4 rounded-lg font-medium transition-all"
+
 
   const correctOptionSelection = (option) => {
     if(option === questionInfo.answer){
@@ -128,9 +131,11 @@ export function CreateQuestionPage({saveQuestion, autoQuestion, cancelQuestion})
         </div>
 
         <div className="flex gap-3">
-          <div className={saveOption} onClick={() => {saveQuestion(questionInfo)}}>
-            <p className="">Salvar</p>
-          </div>
+            {
+              isMobile ? "" : <div className={saveOption} onClick={() => {saveQuestion(questionInfo)}}>
+              <p className="">Salvar</p>
+            </div>
+            }
             <button onClick={cancelQuestion} className="p-2 px-4 rounded-lg font-medium border-[0.7px] border-zinc-300 hover:border-zinc-500 transition-all">Cancelar</button>
         </div>
       </div>
@@ -192,6 +197,16 @@ export function CreateQuestionPage({saveQuestion, autoQuestion, cancelQuestion})
         </div>
       
       </div>
+
+      {
+        isMobile ? 
+        <footer className="fixed w-full bottom-0 backdrop-blur-sm mb-4 left-0 px-[2rem] md:px-[5rem] xl:px-[8rem]">
+          <div className={saveOptionMobile} onClick={() => {saveQuestion(questionInfo)}}>
+            <p className="">Salvar</p>
+          </div>
+        </footer>
+        : ""
+      }
 
     </div>
   );
