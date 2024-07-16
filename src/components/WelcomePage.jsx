@@ -8,13 +8,16 @@ import { Skeleton } from "@mui/material"
 export function WelcomePage(){
   const [quizState, dispatch] = useContext(QuizContext)
   const [history, setHistory] = useState(false)
+  const [infoFetch, setInfoFetch] = useState(false)
+
+  !infoFetch && setInfoFetch(true)
 
   useEffect(() => {
     fetch(import.meta.env.VITE_API + "/all").then(response => response.json())
     .then(data=> {
       dispatch({type: "UPDATE_QUIZES", payload: {quizes: data}})
     })
-  }) 
+  }, [infoFetch]) 
 
   return (
     <div className="py-[2rem] md:py-10">
