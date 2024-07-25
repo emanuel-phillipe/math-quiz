@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { QuizContext } from "../../context/quiz";
-import { Plus, Sparkle, Trash, TrashSimple } from "@phosphor-icons/react";
+import { Plus, PlusMinus, Sparkle, Trash, TrashSimple } from "@phosphor-icons/react";
 import { CreateQuestionPage } from "./CreateQuestionPage";
 import AutoQuestion from "./AutoQuestion";
 import { isMobile } from "react-device-detect";
@@ -18,9 +18,10 @@ export function QuestionCreation() {
   const [quizState, dispatch] = useContext(QuizContext)
   const [quizValues, setQuizValues] = useState({
     title: "",
-    nameCreator: "",
+    nameCreator: [],
     questions: [],
   })
+  const [currentCreator, setCurrentCreator] = useState("")
 
   const [questionsCreation, setQuestionsCreation] = useState(false)
   const [autoQuestion, setAutoQuestion] = useState(false)
@@ -38,7 +39,6 @@ export function QuestionCreation() {
     }
   }
   
-
   const saveQuestion = (question) => {
     setQuizValues((current) => {
       return {
@@ -67,9 +67,15 @@ export function QuestionCreation() {
   const createQuiz = async () => {
 
     if(!ableToSave) {
-      console.log("oi");
       return false
     }
+
+    setQuizValues((current) => {
+      return {
+        ...current,
+        nameCreator: current.nameCreator.includes(",") ? current.nameCreator.split(",") : current.nameCreator
+      }
+    })
 
     const response = await fetch(import.meta.env.VITE_API + "/create", {
       method: "POST",
@@ -85,6 +91,23 @@ export function QuestionCreation() {
   const createAutoQuestion = (questionJson) => {
     setAutoQuestion(questionJson)
     setQuestionsCreation(true)
+  }
+
+  const addCreator = () => {
+    setCurrentCreator("")
+      
+    setQuizValues((current) => {
+      return {
+        ...current,
+        nameCreator: [...current.nameCreator, currentCreator]
+      }
+    })
+  }
+
+  const onKeyDownCreator = (event) => {
+    if(event.key === "Enter"){
+      addCreator()
+    }
   }
 
   const renderPage = () => {
@@ -118,8 +141,14 @@ export function QuestionCreation() {
           </div>
 
           <div className="">
-            <p className="font-semibold mb-1 text-zinc-700">Seu Nome</p>
-            <input type="text" placeholder="Ex. Eduardo Ferreira" value={quizValues.nameCreator} className="border-[0.7px] p-2 rounded-lg border-zinc-300 transition-all focus:border-zinc-700 outline-none" onChange={(e) => setQuizValues((current) => { return {...current, nameCreator: e.target.value}})}/>
+            <p className="font-semibold mb-1 text-zinc-700">Nome(s) do(s) Criador(es)</p>
+            <div className="flex gap-2">
+              <input onKeyDown={onKeyDownCreator} type="text" placeholder="Ex. Eduardo Ferreira" value={currentCreator} className="border-[0.7px] p-2 rounded-lg border-zinc-300 transition-all focus:border-zinc-700 outline-none" onChange={(e) => setCurrentCreator(e.target.value)}/>
+              <button onClick={addCreator} disabled={currentCreator === ""} className={`p-2 ${currentCreator === "" ? 'cursor-not-allowed' : 'hover:bg-zinc-200'} px-4 rounded-lg bg-zinc-100`}><Plus size={18}/></button>
+            </div>
+            {
+              quizValues.nameCreator && <p className="text-[0.8rem] mt-2 text-zinc-500">{quizValues.nameCreator.map(String).join(", ")}</p>
+            }
           </div>
         </div>
   
