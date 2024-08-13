@@ -70,13 +70,6 @@ export function QuestionCreation() {
       return false
     }
 
-    setQuizValues((current) => {
-      return {
-        ...current,
-        nameCreator: current.nameCreator.includes(",") ? current.nameCreator.split(",") : current.nameCreator
-      }
-    })
-
     const response = await fetch(import.meta.env.VITE_API + "/create", {
       method: "POST",
       headers: {
@@ -94,14 +87,25 @@ export function QuestionCreation() {
   }
 
   const addCreator = () => {
-    setCurrentCreator("")
+
+    var creators;
+
+    if(currentCreator.includes(",")){
+      creators = currentCreator.split(",").map((creator) => {
+        return creator.replace(" ", "")
+      })
+    }else {
+      creators = [currentCreator]
+    }    
       
     setQuizValues((current) => {
       return {
         ...current,
-        nameCreator: [...current.nameCreator, currentCreator]
+        nameCreator: [...creators, ...current.nameCreator]
       }
-    })
+    })    
+
+    setCurrentCreator("")
   }
 
   const onKeyDownCreator = (event) => {

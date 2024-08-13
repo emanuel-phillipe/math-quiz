@@ -16,17 +16,6 @@ function QuizOption({title, desc, questionNumber, click, subject}) {
       <div onClick={click} onMouseEnter={() => {setCreatorsWidget(true)}} onMouseLeave={() => {setCreatorsWidget(false)}} className={classAndTextStyles.div}>
         <h3 className={classAndTextStyles.title}>{title}</h3>
         <p className={classAndTextStyles.desc}>{classAndTextStyles.questionsText}</p>
-
-        {
-          !isMobile ? <div className='mt-4 flex gap-3'>
-          {
-            subject.nameCreator.map((name, index) => {
-              return <p key={index} className='bg-zinc-100 p-2 px-4 w-max text-[0.9rem] rounded-md'>{name}</p>
-            })
-          }
-        </div> 
-        : ""
-        }
       </div>
   )
 }
