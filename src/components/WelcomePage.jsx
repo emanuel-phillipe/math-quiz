@@ -52,7 +52,7 @@ export function WelcomePage(){
 
         {
           quizState.subjects.map((subject, index) => {
-            return (<QuizOption key={index} title={subject.title} questionNumber={subject.questions.length} subject={subject} click={() => dispatch({type: "SELECT_QUESTION_AND_SORT", payload: {index}})}/>)
+            return (<QuizOption key={index} creator={subject.nameCreator} title={subject.title} questionNumber={subject.questions.length} subject={subject} click={() => dispatch({type: "SELECT_QUESTION_AND_SORT", payload: {index}})}/>)
           })
         }
 
